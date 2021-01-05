@@ -1,16 +1,23 @@
 require 'rails_helper'
 
 feature 'Registered user' do
-  given { User.create(email: 'email@mail.ru', password: '123456') }
+  given(:user) { create(:user) }
 
   scenario 'can sign in with valid data' do
-    visit root
+    visit new_user_session_path
 
-    fill_in 'E-mail', with: user.email
+    fill_in 'Email', with: user.email
     fill_in 'Password', with: user.password
-    click_on 'Sign in'
+    click_on 'Log in'
 
-    expect(page).to have_content 'You are sign in'
+    expect(page).to have_content 'Signed in successfully.'
   end
-  scenario 'cannot sign in with invalid data'
+  scenario 'cannot sign in with invalid data' do
+    visit new_user_session_path
+
+    click_on 'Log in'
+
+    expect(page).to_not have_content 'Signed in successfully.'
+    expect(page).to have_content 'Invalid Email or password.'
+  end
 end

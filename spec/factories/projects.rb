@@ -3,5 +3,9 @@ FactoryBot.define do
     title { "MyTitle" }
     description { "MyDescription" }
     status { "MyStatus" }
+    user
+    trait :invalid_project do
+      title { nil }
+    end
   end
 end
