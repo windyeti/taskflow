@@ -15,6 +15,10 @@ RSpec.describe ProjectsController, type: :controller do
         expect(assigns(:projects)).to match_array(projects)
       end
 
+      it 'assigns var project' do
+        expect(assigns(:project)).to be_a_new Project
+      end
+
       it 'render index template' do
         expect(response).to render_template :index
       end
@@ -27,37 +31,15 @@ RSpec.describe ProjectsController, type: :controller do
         expect(assigns(:projects)).to be_nil
       end
 
+      it 'dont assigns var project' do
+        expect(assigns(:projects)).to be_nil
+      end
+
       it 'redirect to log in' do
         expect(response).to redirect_to new_user_session_path
       end
     end
   end
-
-  # describe 'GET#new' do
-  #   let(:user) { create(:user) }
-  #   context 'Authenticated user' do
-  #     before do
-  #       log_in(user)
-  #       get :new
-  #     end
-  #     it 'assigns new var to @project' do
-  #       expect(assigns(:project)).to be_a_new Project
-  #     end
-  #     it 'render template new' do
-  #       expect(response).to render_template :new
-  #     end
-  #   end
-  #   context 'Guest' do
-  #     before { get :new }
-  #
-  #     it 'dont assigns new var to @project' do
-  #       expect(assigns(:project)).to be_nil
-  #     end
-  #     it 'redirect to log in' do
-  #       expect(response).to redirect_to new_user_session_path
-  #     end
-  #   end
-  # end
 
   describe 'POST#create' do
     let(:user) { create(:user) }
@@ -69,25 +51,25 @@ RSpec.describe ProjectsController, type: :controller do
 
         it 'change count projects' do
           expect do
-            post :create, params: {project: attributes_for(:project)}
+            post :create, params: {project: attributes_for(:project)}, format: :json
           end.to change(Project, :count).by(1)
         end
 
-        it 'redirect to projects' do
-          post :create, params: {project: attributes_for(:project)}
-          expect(response).to redirect_to projects_path
+        it 'return status success' do
+          post :create, params: {project: attributes_for(:project)}, format: :json
+          expect(response).to have_http_status :success
         end
       end
 
       context 'with wrong data cannot create project' do
         it 'dont change count projects' do
           expect do
-            post :create, params: {project: attributes_for(:project, :invalid_project)}
+            post :create, params: {project: attributes_for(:project, :invalid_project)}, format: :json
           end.to_not change(Project, :count)
         end
-        it 'render template new' do
-          post :create, params: {project: attributes_for(:project, :invalid_project)}
-          expect(response).to render_template :index
+        it 'return status unprocessable_entity' do
+          post :create, params: {project: attributes_for(:project, :invalid_project)}, format: :json
+          expect(response).to have_http_status :unprocessable_entity
         end
       end
     end

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'Create project' do
+feature 'Create project', js: true do
   context 'Authenticated user' do
     given!(:user) { create(:user) }
     background { sign_in(user) }

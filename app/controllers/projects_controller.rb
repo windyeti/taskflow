@@ -4,17 +4,14 @@ class ProjectsController < ApplicationController
     @project = Project.new
   end
 
-  # def new
-  #   @project = Project.new
-  # end
-
   def create
     @project = current_user.projects.new(project_params)
-    if @project.save
-      redirect_to projects_path
-    else
-      @projects = Project.all
-      render :index
+    respond_to do |format|
+      if @project.save
+        format.json { render json: {project: @project}, status: :ok }
+      else
+        format.json { render json: {messages: @project.errors.full_messages}, status: :unprocessable_entity }
+      end
     end
   end
 

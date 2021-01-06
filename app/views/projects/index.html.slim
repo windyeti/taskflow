@@ -1,3 +1,8 @@
-h3 List projects
-= render 'form'
-= render @projects
+.container-fluid.position-relative
+  .errors.position-absolute.top-10.end-20
+  .row.d-flex.justify-content-center
+    .col.col-md-8.col-lg-6
+      h1 List projects
+      = render 'form'
+      .projects
+        = render @projects

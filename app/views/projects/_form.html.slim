@@ -1,7 +1,5 @@
-= render 'shared/errors', resource: @project
-
-h1 Create project
-= form_with model: @project, local: true do |f|
+h3 = @project.id.nil? ? 'Create project' : 'Update project'
+= form_with model: @project, data: { type: :json }, class: "project__form project__form_#{@project.id.nil? ? 'create' : 'update'}" do |f|
   .form-group
     = f.label :title
     = f.text_field :title, class: 'form-control'

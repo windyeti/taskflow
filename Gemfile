@@ -39,6 +39,7 @@ gem 'slim'
 gem 'devise'
 gem 'bootstrap'
 gem 'jquery-rails'
+gem 'skim'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -59,8 +60,8 @@ end
 group :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '>= 2.15'
-  # gem 'selenium-webdriver'
-  gem 'webdrivers', '~> 4.0'
+  gem 'selenium-webdriver'
+  gem 'webdrivers'
   # Easy installation and use of chromedriver to run system tests with Chrome
   # gem 'chromedriver-helper'
   gem 'rails-controller-testing'
