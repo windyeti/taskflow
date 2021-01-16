@@ -1,4 +1,6 @@
 class ProjectsController < ApplicationController
+  before_action :load_project, only: [:edit, :show, :update]
+
   def index
     @projects = Project.all
     @project = Project.new
@@ -15,9 +17,26 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def show; end
+
+  def edit; end
+
+  def update
+    if @project.update(project_params)
+      redirect_to root_path, notice: "Project #{@project.title} has been update"
+    else
+      flash.now[:alert] = "Project #{@project.title} has not been update"
+      render :edit
+    end
+  end
+
   private
 
   def project_params
     params.require(:project).permit(:title, :description, :status)
+  end
+
+  def load_project
+    @project = Project.find(params[:id])
   end
 end

@@ -1,8 +1,9 @@
-.container-fluid.position-relative
-  .errors.position-absolute.top-10.end-20
+.container-fluid
   .row.d-flex.justify-content-center
-    .col.col-md-8.col-lg-6
+    .col.col-md-8.col-lg-6.position-relative
       h1 List projects
-      = render 'form'
+      .errors
+      .bg-light.py-2.px-3.mb-4
+        = render 'form'
       .projects
         = render @projects

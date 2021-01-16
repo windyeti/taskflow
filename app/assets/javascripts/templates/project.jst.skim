@@ -1,1 +1,3 @@
-p.project = @title
+p.project.d-flex
+  <a class="mr-auto" href="/projects/#{@id}">#{@title}</a>
+  <a class='btn btn-primary btn-small mr-2' href="/projects/#{@id}/edit">edit</a>

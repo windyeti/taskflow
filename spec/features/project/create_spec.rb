@@ -6,6 +6,7 @@ feature 'Create project', js: true do
     background { sign_in(user) }
     scenario 'can create project with valid data' do
       visit root_path
+      page.find(:css, '.button_toggle_show_hide_form_create').click
 
       fill_in 'Title', with: 'Title project'
       click_on 'Create Project'
@@ -14,6 +15,7 @@ feature 'Create project', js: true do
     end
     scenario 'cannot create project with invalid data' do
       visit root_path
+      page.find(:css, '.button_toggle_show_hide_form_create').click
 
       click_on 'Create Project'
 
