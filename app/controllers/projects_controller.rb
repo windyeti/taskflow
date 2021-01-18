@@ -1,6 +1,8 @@
 class ProjectsController < ApplicationController
   before_action :load_project, only: [:edit, :show, :update]
 
+  authorize_resource
+
   def index
     @projects = Project.all
     @project = Project.new

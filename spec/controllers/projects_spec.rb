@@ -117,11 +117,11 @@ RSpec.describe ProjectsController, type: :controller do
   end
 
   describe 'GET#edit' do
-    let(:project) { create(:project) }
     let(:user) { create(:user) }
-    before { log_in(user) }
+    let(:project) { create(:project, user: user) }
 
     context 'Authenticated Author' do
+      before { log_in(user) }
       it 'assigns var project' do
         get :edit, params: { id: project }
         expect(assigns(:project)).to eq project
@@ -131,20 +131,51 @@ RSpec.describe ProjectsController, type: :controller do
         expect(response).to render_template :edit
       end
     end
-    context 'Authenticated Admin'
-      it 'assigns var project'
-      it 'render template edit'
-    context 'Guest'
-      it 'does not assign var project'
-      it 'redirect to new_user_seesion'
+    context 'Authenticated not Author' do
+      let(:other_user) { create(:user) }
+      before { log_in(other_user) }
+
+      it 'assigns var project' do
+        get :edit, params: { id: project }
+        expect(assigns(:project)).to eq project
+      end
+      it 'render template edit' do
+        get :edit, params: { id: project }
+        expect(response).to redirect_to new_user_session_path
+      end
+    end
+    context 'Authenticated Admin' do
+      let(:admin_user) { create(:user, role: 'Admin') }
+      before { log_in(admin_user) }
+
+      it 'assigns var project' do
+        get :edit, params: { id: project }
+        expect(assigns(:project)).to eq project
+      end
+      it 'render template edit' do
+        get :edit, params: { id: project }
+        expect(response).to render_template :edit
+      end
+    end
+    context 'Guest' do
+      it 'does not assign var project' do
+        get :edit, params: { id: project }
+        expect(assigns(:project)).to be_nil
+      end
+      it 'redirect to new_user_seesion' do
+        get :edit, params: { id: project }
+        expect(response).to redirect_to new_user_session_path
+      end
+    end
   end
 
   describe 'PATCH#update' do
-    let(:project) { create(:project) }
     let(:user) { create(:user) }
-    before { log_in(user) }
+    let(:project) { create(:project, user: user) }
 
     context 'Authenticated Author' do
+      before { log_in(user) }
+
       context 'with valid data' do
         it 'can change project' do
           patch :update, params: {id: project, project: {title: 'New Title'}}
@@ -175,8 +206,51 @@ RSpec.describe ProjectsController, type: :controller do
           expect(response).to render_template :edit
         end
       end
+    context 'Authenticated not author' do
+      let(:other_user) { create(:user) }
+      before do
+        log_in(other_user)
+      end
+
+      context do
+        it 'cannot change project' do
+          patch :update, params: {id: project, project: {title: 'New Title'}}
+          project.reload
+          expect(project.title).to_not eq 'New Title'
+        end
+        it 'assigns var project' do
+          get :update, params: { id: project, project: attributes_for(:project) }
+          expect(assigns(:project)).to eq project
+        end
+        it 'redirect to new_user_session_path' do
+          get :update, params: { id: project, project: attributes_for(:project) }
+          expect(response).to redirect_to new_user_session_path
+        end
+      end
     end
-    context 'Authenticated Admin'
+    context 'Authenticated Admin' do
+      let(:admin_user) { create(:user, role: 'Admin') }
+      before do
+        log_in(admin_user)
+      end
+
+      context 'with valid data' do
+        it 'can change project' do
+          patch :update, params: {id: project, project: {title: 'New Title'}}
+          project.reload
+          expect(project.title).to eq 'New Title'
+        end
+        it 'assigns var project' do
+          get :update, params: { id: project, project: attributes_for(:project) }
+          expect(assigns(:project)).to eq project
+        end
+        it 'redirect to root' do
+          get :update, params: { id: project, project: attributes_for(:project) }
+          expect(response).to redirect_to root_path
+        end
+      end
+    end
     context 'Guest'
+    end
   end
 end

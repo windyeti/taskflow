@@ -45,10 +45,30 @@ feature 'Author and admin can edit project' do
     end
   end
   describe 'Authenticated Admin' do
-    scenario 'can edit project with valid data'
-    scenario 'cannot edit project with invalid data'
+    given(:user) { create(:user) }
+    given!(:project) { create(:project, user: user) }
+    given(:admin) { create(:user, role: 'Admin') }
+    background { sign_in(admin) }
+
+    scenario 'can edit project with valid data' do
+      visit root_path
+      within('.project') do
+        click_on 'edit'
+      end
+      expect(page).to have_content 'Edit project'
+
+      fill_in 'Title', with: 'New Title'
+      click_on 'Update Project'
+
+      expect(page).to have_content 'New Title'
+    end
   end
   describe 'Guest' do
-    scenario 'cannot edit project'
+    given!(:project) { create(:project) }
+    scenario 'cannot edit project' do
+      visit root_path
+
+      expect(page).to_not have_content "edit"
+    end
   end
 end
