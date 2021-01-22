@@ -1,3 +1,11 @@
-.header.d-flex
-  .sign_in.ml-auto.pt-2.pr-2
+.header.d-flex.mb-4.pb-3(class="#{current_user&.admin? ? 'admin_style' : ''}")
+  .logo.mr-4.pt-3.pl-3
+    = link_to root_path do
+      = image_tag 'logo.svg', data: {src: 'logo.svg'}, class: 'logo'
+  .sign_in.ml-auto.pt-3.pr-3
+    - if user_signed_in?
+      span.user_welcome
+        - if current_user.admin?
+          strong.user_as_admin => "admin"
+        span.user_email = "#{current_user.email}"
     = render 'shared/sign_in'

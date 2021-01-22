@@ -1,3 +1,6 @@
 p.project.d-flex
-  <a class="mr-auto" href="/projects/#{@id}">#{@title}</a>
-  <a class='btn btn-primary btn-small mr-2' href="/projects/#{@id}/edit">edit</a>
+  span.mr-auto
+    a(href="/projects/#{@id}") = @title
+  - if gon.admin or gon.user_id == @id
+    span.mr-2
+      a.btn.btn-outline-primary.btn-sm(href="/projects/#{@id}/edit") edit

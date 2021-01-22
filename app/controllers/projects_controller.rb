@@ -1,11 +1,13 @@
 class ProjectsController < ApplicationController
-  before_action :load_project, only: [:edit, :show, :update]
+  before_action :load_project, only: [:edit, :show, :update, :destroy]
 
   authorize_resource
 
   def index
     @projects = Project.all
     @project = Project.new
+    gon.admin = true
+    gon.user_id = current_user.id
   end
 
   def create
@@ -30,6 +32,10 @@ class ProjectsController < ApplicationController
       flash.now[:alert] = "Project #{@project.title} has not been update"
       render :edit
     end
+  end
+
+  def destroy
+    @project.destroy
   end
 
   private

@@ -250,7 +250,103 @@ RSpec.describe ProjectsController, type: :controller do
         end
       end
     end
-    context 'Guest'
     end
+    context 'Guest' do
+      it 'cannot change project' do
+        patch :update, params: {id: project, project: {title: 'New Title'}}
+        project.reload
+        expect(project.title).to_not eq 'New Title'
+      end
+      it 'does not assign var project' do
+        get :update, params: { id: project, project: attributes_for(:project) }
+        expect(assigns(:project)).to be_nil
+      end
+      it 'redirect to new_user_session_path' do
+        get :update, params: { id: project, project: attributes_for(:project) }
+        expect(response).to redirect_to new_user_session_path
+      end
+    end
+  end
+
+  describe 'DELETE#destroy' do
+    let(:author_user) { create(:user) }
+    let!(:project) { create(:project, user: author_user) }
+
+    context 'Authenticated Author' do
+      before do
+        log_in(author_user)
+      end
+
+      it 'assigns var project' do
+        delete :destroy, params: { id: project }, format: :js
+        expect(assigns(:project)).to eq project
+      end
+      it 'render template destroy' do
+        delete :destroy, params: { id: project }, format: :js
+        expect(response).to render_template :destroy
+      end
+      it 'change count project' do
+        expect do
+          delete :destroy, params: { id: project }, format: :js
+        end.to change(Project, :count).by(-1)
+      end
+    end
+    context 'Authenticated Not Author' do
+      let(:other_user) { create(:user) }
+      before do
+        log_in(other_user)
+      end
+
+      it 'assigns var project' do
+        delete :destroy, params: { id: project }, format: :js
+        expect(assigns(:project)).to eq project
+      end
+      it 'return status forbidden' do
+        delete :destroy, params: { id: project }, format: :js
+        expect(response).to have_http_status :forbidden
+      end
+      it 'does not change count project' do
+        expect do
+          delete :destroy, params: { id: project }, format: :js
+        end.to_not change(Project, :count)
+      end
+    end
+
+    context 'Admin' do
+      let(:admin) { create(:user, role: 'Admin') }
+      before do
+        log_in(admin)
+      end
+
+      it 'assigns var project' do
+        delete :destroy, params: { id: project }, format: :js
+        expect(assigns(:project)).to eq project
+      end
+      it 'render template destroy' do
+        delete :destroy, params: { id: project }, format: :js
+        expect(response).to render_template :destroy
+      end
+      it 'change count project' do
+        expect do
+          delete :destroy, params: { id: project }, format: :js
+        end.to change(Project, :count).by(-1)
+      end
+    end
+    context 'Guest' do
+      it 'does not assign var project' do
+        delete :destroy, params: { id: project }, format: :js
+        expect(assigns(:project)).to be_nil
+      end
+      it 'return status unauthorized' do
+        delete :destroy, params: { id: project }, format: :js
+        expect(response).to have_http_status :unauthorized
+      end
+      it 'does not change count project' do
+        expect do
+          delete :destroy, params: { id: project }, format: :js
+        end.to_not change(Project, :count)
+      end
+    end
+
   end
 end

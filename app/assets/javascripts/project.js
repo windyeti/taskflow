@@ -3,8 +3,6 @@ $(document).on('turbolinks:load', function() {
     $('.errors').html('');
     var title = e.detail[0].project.title;
     var id = e.detail[0].project.id;
-    console.log(title);
-    console.log(e.detail[0]);
     $('.projects').append(JST['templates/project']({
       title: title,
       id: id

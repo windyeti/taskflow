@@ -22,6 +22,7 @@ class Ability
     can :read, Project
     can :create, Project
     can :update, Project, { user: user }
+    can :destroy, Project, { user: user }
   end
 
   def guest
