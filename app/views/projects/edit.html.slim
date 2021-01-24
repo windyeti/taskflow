@@ -1,6 +1,6 @@
 .container-fluid
   .row.d-flex.justify-content-center
-    .col.col-md-8.col-lg-6.position-relative
+    .col.col-md-8.col-lg-6
       .errors
         = render 'shared/errors', resource: @project
 
@@ -12,9 +12,13 @@
             = f.text_field :title, class: 'form-control'
           .form-group
             = f.label :description
-            = f.text_field :description, class: 'form-control'
+            = f.text_area :description, class: 'form-control'
+
           .form-group
-            = f.label :status
-            = f.text_field :status, class: 'form-control'
+            - %w(start work done archive).each do |status|
+              .form-check
+                = f.radio_button :status, status.capitalize, checked: @project.status == status.capitalize , class: 'form-check-input'
+                = f.label :status, status.capitalize, value: status, class: "form-check-label #{status}"
+
           .form-group
             = f.submit class: 'btn btn-primary btn-small'

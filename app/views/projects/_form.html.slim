@@ -1,17 +1,21 @@
-h4.text-secondary.mb-4.mt-4
+h4.text-secondary.py-2
   span Create project
   i.fas.fa-angle-down.btn.btn-outline-primary.btn-sm.ml-2.button_toggle_show_hide_form_create
   i.fas.fa-angle-up.btn.btn-outline-primary.btn-sm.ml-2.d-none.button_toggle_show_hide_form_create
 
-= form_with model: @project, data: { type: :json }, class: "project__form project__form_create d-none" do |f|
+= form_with model: @project, data: { type: :json }, class: "project__form project__form_create pb-1 d-none" do |f|
   .form-group
     = f.label :title
     = f.text_field :title, class: 'form-control'
   .form-group
     = f.label :description
-    = f.text_field :description, class: 'form-control'
+    = f.text_area :description, class: 'form-control'
+
   .form-group
-    = f.label :status
-    = f.text_field :status, class: 'form-control'
+    - %w(start work done archive).each do |status|
+      .form-check
+        = f.radio_button :status, status.capitalize, checked: status.capitalize == 'Start', class: 'form-check-input'
+        = f.label :status, status.capitalize, value: status, class: "form-check-label #{status}"
+
   .form-group
     = f.submit class: 'btn btn-primary btn-small'

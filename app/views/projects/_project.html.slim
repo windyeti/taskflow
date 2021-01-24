@@ -1,5 +1,6 @@
 p.project.d-flex(id="project_id_#{project.id}")
-  span.mr-auto = link_to project.title, project
+  span.status.mr-2(class="#{project.status.downcase}")
+  span.mr-auto = link_to project.title.truncate(20), project
   - if can? :edit, project
     span.mr-2 = link_to 'delete', project,
                                   method: :delete,

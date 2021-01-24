@@ -1,0 +1,43 @@
+.project {
+  .status {
+    display: inline-block;
+    margin-top: 5px;
+    width: 15px;
+    height: 15px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    border: 1px solid $primary;
+
+    &.start {
+      background-color: $primary;
+      border-color: $primary;
+    }
+    &.work {
+      background-color: $success;
+      border-color: $success;
+    }
+    &.done {
+      background-color: $danger;
+      border-color: $danger;
+    }
+    &.archive {
+      border-color: $secondary;
+    }
+  }
+}
+
+.form-check {
+  .start {
+    color: $primary;
+  }
+  .work {
+    color: $success;
+  }
+  .done {
+    color: $danger;
+  }
+  .archive {
+    color: $secondary;
+  }
+}
