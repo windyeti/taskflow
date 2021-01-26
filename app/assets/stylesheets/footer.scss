@@ -1,0 +1,15 @@
+html, body {
+  height: 100%;
+}
+.wrapper {
+  min-height: 100%;
+  margin-bottom: -80px;
+}
+.content {
+  height: 100%;
+  padding-bottom: 80px;
+}
+.footer {
+  height: 80px;
+  background-color: $purple;
+}

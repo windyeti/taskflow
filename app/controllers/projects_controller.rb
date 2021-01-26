@@ -4,7 +4,7 @@ class ProjectsController < ApplicationController
   authorize_resource
 
   def index
-    @projects = Project.all
+    @projects = Project.order(id: :desc)
     @project = Project.new
     gon.admin = true
     gon.user_id = current_user.id
