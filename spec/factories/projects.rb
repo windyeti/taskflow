@@ -2,8 +2,8 @@ FactoryBot.define do
   factory :project do
     title { "MyTitle" }
     description { "MyDescription" }
-    status { "MyStatus" }
     user
+    status
     trait :invalid_project do
       title { nil }
     end

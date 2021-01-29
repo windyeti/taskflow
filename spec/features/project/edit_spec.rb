@@ -9,7 +9,7 @@ feature 'Author and admin can edit project' do
     scenario 'can edit project with valid data' do
       visit root_path
       within('.project') do
-        click_on 'edit'
+        page.find(:css, '.btn.btn-outline-primary.btn-sm').click
       end
       expect(page).to have_content 'Edit project'
 
@@ -21,7 +21,7 @@ feature 'Author and admin can edit project' do
     scenario 'cannot edit project with invalid data' do
       visit root_path
       within('.project') do
-        click_on 'edit'
+        page.find(:css, '.btn.btn-outline-primary.btn-sm').click
       end
       expect(page).to have_content 'Edit project'
 
@@ -53,7 +53,7 @@ feature 'Author and admin can edit project' do
     scenario 'can edit project with valid data' do
       visit root_path
       within('.project') do
-        click_on 'edit'
+        page.find(:css, '.btn.btn-outline-primary.btn-sm').click
       end
       expect(page).to have_content 'Edit project'
 

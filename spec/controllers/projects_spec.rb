@@ -51,12 +51,12 @@ RSpec.describe ProjectsController, type: :controller do
 
         it 'change count projects' do
           expect do
-            post :create, params: {project: attributes_for(:project)}, format: :json
+            post :create, params: {project: attributes_for(:project, status_id: create(:status))}, format: :json
           end.to change(Project, :count).by(1)
         end
 
         it 'return status success' do
-          post :create, params: {project: attributes_for(:project)}, format: :json
+          post :create, params: {project: attributes_for(:project, status_id: create(:status))}, format: :json
           expect(response).to have_http_status :success
         end
       end

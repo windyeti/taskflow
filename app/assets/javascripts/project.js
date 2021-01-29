@@ -3,11 +3,13 @@ $(document).on('turbolinks:load', function() {
     $('.errors').html('');
     var title = e.detail[0].project.title;
     var id = e.detail[0].project.id;
-    var status = e.detail[0].project.status;
+    var status = e.detail[0].status;
+    var typejobs = e.detail[0].typejobs;
     $('.projects').prepend(JST['templates/project']({
       title: title,
       id: id,
-      status: status.toLowerCase()
+      status: status,
+      typejobs: typejobs
     }));
     $(this).find('input[type="text"], textarea').val('');
     $('.button_toggle_show_hide_form_create, .project__form_create').toggleClass('d-none')

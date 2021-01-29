@@ -14,7 +14,7 @@ class ProjectsController < ApplicationController
     @project = current_user.projects.new(project_params)
     respond_to do |format|
       if @project.save
-        format.json { render json: {project: @project}, status: :ok }
+        format.json { render json: {project: @project, typejobs: @project.typejobs.map {|typejob| typejob.name }, status: @project.status.name }, status: :ok }
       else
         format.json { render json: {messages: @project.errors.full_messages}, status: :unprocessable_entity }
       end
@@ -41,7 +41,7 @@ class ProjectsController < ApplicationController
   private
 
   def project_params
-    params.require(:project).permit(:title, :description, :status)
+    params.require(:project).permit(:title, :description, :status_id, :typejob_ids => [])
   end
 
   def load_project

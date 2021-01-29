@@ -2,8 +2,11 @@ p.project.d-flex(id="project_id_#{@id}")
   span(class="status mr-2 #{@status}")
   span.mr-auto
     a(href="/projects/#{@id}") = @title
+  small.mr-1
+    - for typejob in @typejobs
+      span.typejob.mr-2 = (typejob.split('/').map (word) -> word.slice(0,1)).join('')
   - if gon.admin or gon.user_id == @id
-    span.mr-2
+    span.mr-1
       a.btn.btn-outline-danger.btn-sm(href="/projects/#{@id}" data-confirm="Are you sure?" data-remote="true" rel="nofollow" data-method="delete") delete
     span.mr-2
       a.btn.btn-outline-primary.btn-sm(href="/projects/#{@id}/edit") edit

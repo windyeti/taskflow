@@ -12,10 +12,15 @@ h4.text-secondary.py-2
     = f.text_area :description, class: 'form-control'
 
   .form-group
-    - %w(start work done archive).each do |status|
+    =f.collection_radio_buttons(:status_id, Status.all, :id, :name) do |b|
       .form-check
-        = f.radio_button :status, status.capitalize, checked: status.capitalize == 'Start', class: 'form-check-input'
-        = f.label :status, status.capitalize, value: status, class: "form-check-label #{status}"
+        = b.label(class: "form-check-label status #{b.text}") { b.radio_button(class: "form-check-input", checked: b.text == 'start') + b.text.capitalize }
+
+  .form-group
+    = f.collection_check_boxes(:typejob_ids, Typejob.all, :id, :just_name) do |b|
+      .form-check
+        = b.label(class: "form-check-label status") {b.check_box(class: "form-check-input") + b.text}
+
 
   .form-group
     = f.submit class: 'btn btn-primary btn-small'

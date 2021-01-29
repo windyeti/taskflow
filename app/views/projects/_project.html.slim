@@ -1,10 +1,14 @@
 p.project.d-flex(id="project_id_#{project.id}")
-  span.status.mr-2(class="#{project.status.downcase}")
+  /TODO удалить после установки дефолтного значения в форме Start
+  - if project.status
+    span.status.mr-2(class="#{project.status.name}")
   span.mr-auto = link_to project.title.truncate(20), project
+  small.mr-1
+    = render 'shared/typejob', project: project
   - if can? :edit, project
-    span.mr-2 = link_to 'delete', project,
+    span.mr-1 = link_to '<i class="fas fa-times"></i>'.html_safe, project,
                                   method: :delete,
                                   data: {confirm: "Are you sure?"},
                                   remote: true,
                                   class: 'btn btn-outline-danger btn-sm'
-    span.mr-2 = link_to 'edit', edit_project_path(project), class: 'btn btn-outline-primary btn-sm'
+    span.mr-2 = link_to '<i class="fas fa-pencil-alt"></i>'.html_safe, edit_project_path(project), class: 'btn btn-outline-primary btn-sm'

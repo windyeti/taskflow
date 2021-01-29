@@ -10,7 +10,7 @@ feature 'User delete project', js: true do
 
       accept_alert do
         within '.project' do
-          click_on 'delete'
+          page.find(:css, '.fa-times').click
         end
       end
 
@@ -38,7 +38,7 @@ feature 'User delete project', js: true do
 
       accept_alert do
         within '.project' do
-          click_on 'delete'
+          page.find(:css, '.fa-times').click
         end
       end
 

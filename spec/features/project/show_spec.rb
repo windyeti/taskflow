@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 feature 'Show project' do
-  given!(:project) { create(:project, description: 'This description project test') }
+  given!(:statuses) { create_list(:status, 4) }
+  given!(:project) { create(:project, description: 'This description project test', status: statuses[1] ) }
 
   describe 'Authenticated user can see project' do
     given(:user) { create(:user) }
@@ -11,6 +12,7 @@ feature 'Show project' do
       click_on project.title
 
       expect(page).to have_content 'This description project test'
+      expect(page).to have_content "#{statuses[1].name.capitalize}"
     end
   end
   describe 'Guest user cannot see project' do

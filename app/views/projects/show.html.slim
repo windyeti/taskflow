@@ -7,4 +7,7 @@
         = @project.description
       .project__status
         h5 Статус
-        = @project.status
+        = @project.status.name.capitalize
+      .project__typejob
+        h5 Typejob
+        = render @project.typejobs

@@ -1,0 +1,20 @@
+.form-check {
+  display: inline-block;
+}
+.form-check-label {
+  &.status {
+    margin-right: 10px;
+  }
+  &.start {
+    color: $primary;
+  }
+  &.work {
+    color: $success;
+  }
+  &.done {
+    color: $danger;
+  }
+  &.archive {
+    color: $secondary;
+  }
+}
