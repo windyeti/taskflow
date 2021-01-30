@@ -1,7 +1,5 @@
 p.project.d-flex(id="project_id_#{project.id}")
-  /TODO удалить после установки дефолтного значения в форме Start
-  - if project.status
-    span.status.mr-2(class="#{project.status.name}")
+  span.status.mr-2(class="#{project.status.name}")
   span.mr-auto = link_to project.title.truncate(20), project
   small.mr-1
     = render 'shared/typejob', project: project

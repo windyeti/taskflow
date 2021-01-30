@@ -7,6 +7,8 @@ p.project.d-flex(id="project_id_#{@id}")
       span.typejob.mr-2 = (typejob.split('/').map (word) -> word.slice(0,1)).join('')
   - if gon.admin or gon.user_id == @id
     span.mr-1
-      a.btn.btn-outline-danger.btn-sm(href="/projects/#{@id}" data-confirm="Are you sure?" data-remote="true" rel="nofollow" data-method="delete") delete
+      a.btn.btn-outline-danger.btn-sm(href="/projects/#{@id}" data-confirm="Are you sure?" data-remote="true" rel="nofollow" data-method="delete")
+        i.fas.fa-times
     span.mr-2
-      a.btn.btn-outline-primary.btn-sm(href="/projects/#{@id}/edit") edit
+      a.btn.btn-outline-primary.btn-sm(href="/projects/#{@id}/edit")
+        i.fas.fa-pencil-alt
