@@ -4,6 +4,9 @@ class RegistrationsController < Devise::RegistrationsController
 
   # allow authenticated user create a new user (registration)
   # i.e. prevented default devise behaving
+  # в противном случае, аутентифицированный пользователь-админ при попытке
+  # зайти на регистрацию будет перенаправлен на root страницу, так как
+  # регистрация дозволена devise только для неаутентифицированных
   skip_before_action :require_no_authentication, only: [:new, :create]
 
   def new
