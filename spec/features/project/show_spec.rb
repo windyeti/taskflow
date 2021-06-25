@@ -2,7 +2,7 @@ require 'rails_helper'
 
 feature 'Show project' do
   given!(:statuses) { create_list(:status, 4) }
-  given!(:project) { create(:project, description: 'This description project test', status: statuses[1] ) }
+  given!(:project) { create(:project, description: 'This description project test', status: statuses[1], cost: 10000 ) }
 
   describe 'Authenticated user can see project' do
     given(:user) { create(:user) }
@@ -13,6 +13,7 @@ feature 'Show project' do
 
       expect(page).to have_content 'This description project test'
       expect(page).to have_content "#{statuses[1].name.capitalize}"
+      expect(page).to have_content "10000 руб."
     end
   end
   describe 'Guest user cannot see project' do
