@@ -1,4 +1,4 @@
-h4.text-secondary.py-2
+h5.text-secondary.py-2
   span Create project
   i.fas.fa-angle-down.btn.btn-outline-primary.btn-sm.ml-2.button_toggle_show_hide_form_create
   i.fas.fa-angle-up.btn.btn-outline-primary.btn-sm.ml-2.d-none.button_toggle_show_hide_form_create
@@ -10,6 +10,9 @@ h4.text-secondary.py-2
   .form-group
     = f.label :description
     = f.text_area :description, class: 'form-control'
+  .form-group
+    = f.label :cost
+    = f.text_field :cost, class: 'form-control'
 
   .form-group
     =f.collection_radio_buttons(:status_id, Status.all, :id, :name) do |b|

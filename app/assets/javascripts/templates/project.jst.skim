@@ -3,6 +3,17 @@ p.project.d-flex(id="project_id_#{@id}")
   span.mr-auto
     a(href="/projects/#{@id}") = @title
   small.mr-1
+    span.project_cost.mr-1
+      - delimetr = (value) ->
+        - arr_value = value.toString().split('');
+        - offset = arr_value.length % 3
+        - result = []
+        - for item, index in arr_value
+          - result.push(item)
+          - result.push(" ") if ((index == offset - 1) && (offset != 0)) || (((index + 1 - offset) % 3 == 0) && ((index + 1) != arr_value.length))
+        - result.join('')
+      span.value.mr-1 = delimetr(@cost)
+      span.currence руб.
     - for typejob in @typejobs
       span.typejob.mr-2 = (typejob.split('/').map (word) -> word.slice(0,1)).join('')
   - if gon.admin or gon.user_id == @id

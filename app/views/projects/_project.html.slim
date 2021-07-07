@@ -1,8 +1,15 @@
 p.project.d-flex(id="project_id_#{project.id}")
   span.status.mr-2(class="#{project.status.name}")
+  - if project.paid
+    span.paid.mr-2(class="paid")
+      i.fas.fa-check.text-danger
   span.mr-auto = link_to project.title.truncate(20), project
-  small.mr-1
-    = render 'shared/typejob', project: project
+  small.mr-2
+    span.project_typejobs.mr-2
+      = render 'shared/typejob', project: project
+    span.project_cost.mr-1
+      strong.value.mr-1 = delimetr(project.cost)
+      span.currence руб.
   - if can? :edit, project
     span.mr-1 = link_to '<i class="fas fa-times"></i>'.html_safe, project,
                                   method: :delete,

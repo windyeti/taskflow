@@ -3,11 +3,20 @@
     .col.col-md-8.col-lg-6
       h4 = @project.title
       .project__description
-        h5 Описание
-        = @project.description
+        strong Описание:
+        =< @project.description.html_safe
+      .project__cost
+        strong Стоимость:
+        =<> @project.cost
+        span руб.
       .project__status
-        h5 Статус
-        = @project.status.name.capitalize
+        strong Статус:
+        =< @project.status.name.capitalize
       .project__typejob
-        h5 Typejob
+        strong Typejob:
         = render @project.typejobs
+
+      .control_links.mt-2
+        span |
+        =<> link_to "Projects", projects_path
+        span |

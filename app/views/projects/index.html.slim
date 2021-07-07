@@ -1,7 +1,12 @@
 .container-fluid
   .row.d-flex.justify-content-center
     .col.col-md-8.col-lg-6.position-relative
-      h1 List projects
+      h3.d-flex
+        span.mr-1 = link_to "Actual", projects_path, class: "btn btn-sm btn-outline-success"
+        span.mr-auto = link_to "Archive", projects_path(archive: "1"), class: "btn btn-sm btn-outline-secondary"
+        span
+          span => delimetr(Project.sum_done)
+          span руб.
       .errors
       .bg-light.px-2.mb-4
         = render 'form'

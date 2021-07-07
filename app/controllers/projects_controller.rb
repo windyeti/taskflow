@@ -4,7 +4,7 @@ class ProjectsController < ApplicationController
   authorize_resource
 
   def index
-    @projects = Project.order(id: :desc)
+    @projects = params[:archive] == "1" ? Project.archive.order(id: :desc) : Project.actual.order(id: :desc)
     @project = Project.new
     gon.admin = true
     gon.user_id = current_user.id
@@ -14,7 +14,7 @@ class ProjectsController < ApplicationController
     @project = current_user.projects.new(project_params)
     respond_to do |format|
       if @project.save
-        format.json { render json: {project: @project, typejobs: @project.typejobs.map {|typejob| typejob.name }, status: @project.status.name }, status: :ok }
+        format.json { render json: {project: @project, typejobs: @project.typejobs.map {|typejob| typejob.name }, status: @project.status.name, cost: @project.cost }, status: :ok }
       else
         format.json { render json: {messages: @project.errors.full_messages}, status: :unprocessable_entity }
       end
@@ -41,7 +41,7 @@ class ProjectsController < ApplicationController
   private
 
   def project_params
-    params.require(:project).permit(:title, :description, :status_id, :typejob_ids => [])
+    params.require(:project).permit(:title, :description, :status_id, :cost, :paid, :typejob_ids => [])
   end
 
   def load_project

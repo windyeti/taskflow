@@ -14,9 +14,11 @@ feature 'Author and admin can edit project' do
       expect(page).to have_content 'Edit project'
 
       fill_in 'Title', with: 'New Title'
+      check 'Paid'
       click_on 'Update Project'
 
       expect(page).to have_content 'New Title'
+      expect(page).to have_css(".fas.fa-check")
     end
     scenario 'cannot edit project with invalid data' do
       visit root_path

@@ -13,6 +13,15 @@
           .form-group
             = f.label :description
             = f.text_area :description, class: 'form-control'
+          .form-group
+            = f.label :cost
+            = f.text_field :cost, class: 'form-control'
+
+          .form-group
+            .form-check
+              = f.label :paid, class: "form-check-label"
+                = f.check_box :paid, class: "form-check-input"
+                span Paid
 
           .form-group
             =f.collection_radio_buttons(:status_id, Status.all, :id, :name) do |b|
@@ -26,3 +35,8 @@
 
           .form-group
             = f.submit class: 'btn btn-primary btn-small'
+
+        .control_links.mt-2
+          span |
+          =<> link_to "Projects", projects_path
+          span |
