@@ -37,7 +37,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'slim'
 gem 'devise'
-gem 'bootstrap'
+gem 'bootstrap', '~> 4.0.0'
 gem 'jquery-rails'
 gem 'skim', '0.10.0'
 gem 'cancancan'
