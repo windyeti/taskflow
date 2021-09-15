@@ -39,7 +39,7 @@ gem 'slim'
 gem 'devise'
 gem 'bootstrap'
 gem 'jquery-rails'
-gem 'skim'
+gem 'skim', '0.10.0'
 gem 'cancancan'
 gem 'gon'
 
