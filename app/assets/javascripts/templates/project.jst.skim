@@ -2,7 +2,9 @@ p.project.d-flex(id="project_id_#{@id}")
   span(class="status mr-2 #{@status}")
   span.mr-auto
     a(href="/projects/#{@id}") = @title
-  small.mr-1
+  small.mr-2
+    - for typejob in @typejobs
+      span.typejob.mr-2 = (typejob.split('/').map (word) -> word.slice(0,1)).join('')
     span.project_cost.mr-1
       - delimetr = (value) ->
         - arr_value = value.toString().split('');
@@ -12,10 +14,8 @@ p.project.d-flex(id="project_id_#{@id}")
           - result.push(item)
           - result.push(" ") if ((index == offset - 1) && (offset != 0)) || (((index + 1 - offset) % 3 == 0) && ((index + 1) != arr_value.length))
         - result.join('')
-      span.value.mr-1 = delimetr(@cost)
+      strong.value.mr-1 = delimetr(@cost)
       span.currence руб.
-    - for typejob in @typejobs
-      span.typejob.mr-2 = (typejob.split('/').map (word) -> word.slice(0,1)).join('')
   - if gon.admin or gon.user_id == @id
     span.mr-1
       a.btn.btn-outline-danger.btn-sm(href="/projects/#{@id}" data-confirm="Are you sure?" data-remote="true" rel="nofollow" data-method="delete")
