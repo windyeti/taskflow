@@ -12,7 +12,7 @@
 //
 //= require skim
 //= require rails-ujs
-//= require jquery
+//= require jquery3
 //= require activestorage
 //= require turbolinks
 //= require popper

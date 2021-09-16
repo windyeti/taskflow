@@ -45,7 +45,7 @@ gem 'gon'
 
 gem 'unicorn'
 
-# gem 'mini_racer', '0.2.9'
+gem 'terser'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
